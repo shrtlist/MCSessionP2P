@@ -99,7 +99,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 - (void)teardownSession
 {
-    //[_advertiserAssistant stop];
     [_nearbyServiceBrowser stopBrowsingForPeers];
     [_nearbyServiceAdvertiser stopAdvertisingPeer];
     
