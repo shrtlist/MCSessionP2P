@@ -19,8 +19,8 @@
 @implementation MCTestViewController
 {
     MCSession *_mcSession;
-    MCNearbyServiceBrowser *_nearbyServiceBrowser;
     MCNearbyServiceAdvertiser *_nearbyServiceAdvertiser;
+    MCNearbyServiceBrowser *_nearbyServiceBrowser;
 }
 
 static NSString * const kMCSessionServiceType = @"mcsessionp2p";
