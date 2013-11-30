@@ -169,7 +169,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 - (void)session:(MCSession *)session didReceiveCertificate:(NSArray *)certificate fromPeer:(MCPeerID *)peerID certificateHandler:(void (^)(BOOL accept))certificateHandler
 {
-    NSLog(@"didReceiveCertificate %@ from %@", certificate, peerID);
+    NSLog(@"didReceiveCertificate %@ from %@", certificate, peerID.displayName);
 
     // Trust the nearby peer
     certificateHandler(true);
@@ -186,20 +186,27 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 // Found a nearby advertising peer
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info
 {
-    NSLog(@"Browser found peerID %@", peerID);
+    NSString *remotePeerName = peerID.displayName;
+
+    NSLog(@"Browser found %@", remotePeerName);
     
     MCPeerID *myPeerID = _mcSession.myPeerID;
-    BOOL shouldInvite = ([myPeerID.displayName hash] > [peerID.displayName hash]);
+    BOOL shouldInvite = ([myPeerID.displayName hash] > [remotePeerName hash]);
     
     if (shouldInvite)
+    {
+        NSLog(@"Inviting %@", remotePeerName);
         [browser invitePeer:peerID toSession:_mcSession withContext:nil timeout:1.0];
+    }
     else
-        NSLog(@"Not inviting");
+    {
+        NSLog(@"Not inviting %@", remotePeerName);
+    }
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID
 {
-    NSLog(@"lostPeer %@", peerID);
+    NSLog(@"lostPeer %@", peerID.displayName);
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error
@@ -211,7 +218,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler
 {
-    NSLog(@"didReceiveInvitationFromPeer %@", peerID);
+    NSLog(@"didReceiveInvitationFromPeer %@", peerID.displayName);
 
     invitationHandler(YES, _mcSession);
 }
