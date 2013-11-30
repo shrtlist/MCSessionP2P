@@ -276,11 +276,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     static NSString *cellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
 
     cell.textLabel.text = @"None";
 	
