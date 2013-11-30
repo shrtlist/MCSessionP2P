@@ -18,7 +18,6 @@
 
 @implementation MCTestViewController
 {
-    MCPeerID *_peerID;
     MCSession *_mcSession;
     MCNearbyServiceBrowser *_nearbyServiceBrowser;
     MCNearbyServiceAdvertiser *_nearbyServiceAdvertiser;
@@ -73,21 +72,21 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 - (void)setupSession
 {
-    _peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
+    MCPeerID *peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
     
     // Create the session that peers will be invited/join into.
-    _mcSession = [[MCSession alloc] initWithPeer:_peerID];
+    _mcSession = [[MCSession alloc] initWithPeer:peerID];
     
     // Set ourselves as delegate
     _mcSession.delegate = self;
 
-    _nearbyServiceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_peerID
+    _nearbyServiceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:peerID
                                                                  discoveryInfo:nil
                                                                    serviceType:kMCSessionServiceType];
     _nearbyServiceAdvertiser.delegate = self;
     [_nearbyServiceAdvertiser startAdvertisingPeer];
     
-    _nearbyServiceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:_peerID
+    _nearbyServiceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:peerID
                                                              serviceType:kMCSessionServiceType];
     _nearbyServiceBrowser.delegate = self;
     [_nearbyServiceBrowser startBrowsingForPeers];
@@ -189,7 +188,8 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 {
     NSLog(@"Browser found peerID %@", peerID);
     
-    BOOL shouldInvite = ([_peerID.displayName hash] > [peerID.displayName hash]);
+    MCPeerID *myPeerID = _mcSession.myPeerID;
+    BOOL shouldInvite = ([myPeerID.displayName hash] > [peerID.displayName hash]);
     
     if (shouldInvite)
         [browser invitePeer:peerID toSession:_mcSession withContext:nil timeout:1.0];
