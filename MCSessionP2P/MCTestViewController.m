@@ -33,20 +33,18 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     [super viewDidLoad];
     
     [self setupSession];
-    
+
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
-    // Register for notifications when the application leaves the background state
-    // on its way to becoming the active application.
+    // Register for notifications
     [defaultCenter addObserver:self 
-                      selector:@selector(setupSession) 
-                          name:UIApplicationWillEnterForegroundNotification
+                      selector:@selector(setupSession)
+                          name:UIApplicationDidBecomeActiveNotification
                         object:nil];
 
-    // Register for notifications when when the application enters the background.
     [defaultCenter addObserver:self 
-                      selector:@selector(teardownSession) 
-                          name:UIApplicationDidEnterBackgroundNotification
+                      selector:@selector(teardownSession)
+                          name:UIApplicationWillResignActiveNotification
                         object:nil];
 }
 
