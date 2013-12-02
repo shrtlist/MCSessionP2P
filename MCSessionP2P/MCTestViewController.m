@@ -18,9 +18,9 @@
 
 @implementation MCTestViewController
 {
-    MCSession *_mcSession;
-    MCNearbyServiceAdvertiser *_nearbyServiceAdvertiser;
-    MCNearbyServiceBrowser *_nearbyServiceBrowser;
+    MCSession *_session;
+    MCNearbyServiceAdvertiser *_serviceAdvertiser;
+    MCNearbyServiceBrowser *_serviceBrowser;
 }
 
 static NSString * const kMCSessionServiceType = @"mcsessionp2p";
@@ -37,14 +37,16 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
     // Register for notifications
     [defaultCenter addObserver:self 
-                      selector:@selector(setupSession)
+                      selector:@selector(startServices)
                           name:UIApplicationDidBecomeActiveNotification
                         object:nil];
 
     [defaultCenter addObserver:self 
-                      selector:@selector(teardownSession)
+                      selector:@selector(stopServices)
                           name:UIApplicationWillResignActiveNotification
                         object:nil];
+    
+    self.title = [NSString stringWithFormat:@"MCSession: %@", _session.myPeerID.displayName];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -66,6 +68,9 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 {
     // Unregister for notifications on deallocation.
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [_session disconnect];
+    _session.delegate = nil;
 }
 
 #pragma mark - Private methods
@@ -73,34 +78,36 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)setupSession
 {
     MCPeerID *peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
-    
-    // Create the session that peers will be invited/join into.
-    _mcSession = [[MCSession alloc] initWithPeer:peerID];
-    
-    // Set ourselves as delegate
-    _mcSession.delegate = self;
 
-    _nearbyServiceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:peerID
+    // Create the session that peers will be invited/join into.
+    _session = [[MCSession alloc] initWithPeer:peerID securityIdentity:nil encryptionPreference:MCEncryptionNone];
+    _session.delegate = self;
+
+    _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:peerID
                                                                  discoveryInfo:nil
                                                                    serviceType:kMCSessionServiceType];
-    _nearbyServiceAdvertiser.delegate = self;
-    [_nearbyServiceAdvertiser startAdvertisingPeer];
+    _serviceAdvertiser.delegate = self;
     
-    _nearbyServiceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:peerID
+    _serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:peerID
                                                              serviceType:kMCSessionServiceType];
-    _nearbyServiceBrowser.delegate = self;
-    [_nearbyServiceBrowser startBrowsingForPeers];
-    
-    self.title = [NSString stringWithFormat:@"MCSession: %@", _mcSession.myPeerID.displayName];
+    _serviceBrowser.delegate = self;
 }
 
-- (void)teardownSession
+- (void)startServices
 {
-    [_nearbyServiceBrowser stopBrowsingForPeers];
-    [_nearbyServiceAdvertiser stopAdvertisingPeer];
-    
-    [_mcSession disconnect];
-    _mcSession.delegate = nil;
+    [_serviceAdvertiser startAdvertisingPeer];
+    [_serviceBrowser startBrowsingForPeers];
+}
+
+- (void)stopServices
+{
+    [_serviceBrowser stopBrowsingForPeers];
+    [_serviceAdvertiser stopAdvertisingPeer];
+}
+
+- (void)updateUI
+{
+    [self.tableView reloadData];
 }
 
 // Helper method for human readable printing of MCSessionState.  This state is per peer.
@@ -190,13 +197,13 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
     NSLog(@"Browser found %@", remotePeerName);
     
-    MCPeerID *myPeerID = _mcSession.myPeerID;
+    MCPeerID *myPeerID = _session.myPeerID;
     BOOL shouldInvite = ([myPeerID.displayName hash] > [remotePeerName hash]);
     
     if (shouldInvite)
     {
         NSLog(@"Inviting %@", remotePeerName);
-        [browser invitePeer:peerID toSession:_mcSession withContext:nil timeout:1.0];
+        [browser invitePeer:peerID toSession:_session withContext:nil timeout:1.0];
     }
     else
     {
@@ -207,6 +214,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID
 {
     NSLog(@"lostPeer %@", peerID.displayName);
+    [_session cancelConnectPeer:peerID];
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error
@@ -220,7 +228,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 {
     NSLog(@"didReceiveInvitationFromPeer %@", peerID.displayName);
 
-    invitationHandler(YES, _mcSession);
+    invitationHandler(YES, _session);
 }
 
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didNotStartAdvertisingPeer:(NSError *)error
@@ -251,7 +259,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
             
         case MCSessionStateConnected:
         {
-            NSArray *connectedPeers = _mcSession.connectedPeers;
+            NSArray *connectedPeers = _session.connectedPeers;
             rows = connectedPeers.count;
             break;
         }
@@ -294,7 +302,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     {
         case MCSessionStateConnected:
         {
-            peers = _mcSession.connectedPeers;
+            peers = _session.connectedPeers;
             break;
         }
     }
