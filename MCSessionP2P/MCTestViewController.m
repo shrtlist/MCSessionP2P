@@ -80,7 +80,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     MCPeerID *peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
 
     // Create the session that peers will be invited/join into.
-    _session = [[MCSession alloc] initWithPeer:peerID securityIdentity:nil encryptionPreference:MCEncryptionNone];
+    _session = [[MCSession alloc] initWithPeer:peerID];
     _session.delegate = self;
 
     _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:peerID
@@ -203,7 +203,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     if (shouldInvite)
     {
         NSLog(@"Inviting %@", remotePeerName);
-        [browser invitePeer:peerID toSession:_session withContext:nil timeout:1.0];
+        [browser invitePeer:peerID toSession:_session withContext:nil timeout:30.0];
     }
     else
     {
