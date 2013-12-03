@@ -130,7 +130,12 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
 {
     NSLog(@"Peer [%@] changed state to %@", peerID.displayName, [self stringForPeerConnectionState:state]);
-    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
+    
+    // Delegate calls occur on a private operation queue.
+    // Ensure UI updates occur on the main queue.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateUI];
+    });
 }
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
