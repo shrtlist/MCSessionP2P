@@ -214,7 +214,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID
 {
     NSLog(@"lostPeer %@", peerID.displayName);
-    [_session cancelConnectPeer:peerID];
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error
