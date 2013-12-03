@@ -30,8 +30,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self setupSession];
 
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
@@ -69,7 +67,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     // Unregister for notifications on deallocation.
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [_session disconnect];
     _session.delegate = nil;
 }
 
@@ -95,6 +92,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 - (void)startServices
 {
+    [self setupSession];
     [_serviceAdvertiser startAdvertisingPeer];
     [_serviceBrowser startBrowsingForPeers];
 }
@@ -103,6 +101,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 {
     [_serviceBrowser stopBrowsingForPeers];
     [_serviceAdvertiser stopAdvertisingPeer];
+    [_session disconnect];
 }
 
 - (void)updateUI
