@@ -43,8 +43,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
                       selector:@selector(stopServices)
                           name:UIApplicationWillResignActiveNotification
                         object:nil];
-    
-    self.title = [NSString stringWithFormat:@"MCSession: %@", _session.myPeerID.displayName];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -79,6 +77,8 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     // Create the session that peers will be invited/join into.
     _session = [[MCSession alloc] initWithPeer:peerID];
     _session.delegate = self;
+    
+    self.title = [NSString stringWithFormat:@"MCSession: %@", _session.myPeerID.displayName];
 
     _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:peerID
                                                                  discoveryInfo:nil
