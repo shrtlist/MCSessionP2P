@@ -104,11 +104,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     [_session disconnect];
 }
 
-- (void)updateUI
-{
-    [self.tableView reloadData];
-}
-
 // Helper method for human readable printing of MCSessionState.  This state is per peer.
 - (NSString *)stringForPeerConnectionState:(MCSessionState)state
 {
@@ -133,7 +128,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     // Delegate calls occur on a private operation queue.
     // Ensure UI updates occur on the main queue.
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateUI];
+        [self.tableView reloadData];
     });
 }
 
