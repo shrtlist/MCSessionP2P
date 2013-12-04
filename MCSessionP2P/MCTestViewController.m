@@ -76,7 +76,10 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     // Unregister for notifications on deallocation.
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    // Nil out delegates
     _session.delegate = nil;
+    _serviceAdvertiser.delegate = nil;
+    _serviceBrowser.delegate = nil;
 }
 
 #pragma mark - Private methods
