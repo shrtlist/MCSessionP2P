@@ -256,7 +256,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     NSLog(@"didNotStartBrowsingForPeers: %@", error);
 }
 
-#pragma mark - MCNearbyServiceAdvertiserDelegate
+#pragma mark - MCNearbyServiceAdvertiserDelegate protocol conformance
 
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler
 {
