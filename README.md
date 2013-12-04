@@ -1,5 +1,5 @@
 ### MCSessionP2P
-A universal (iPhone/iPad) storyboard project that illustrates the ad-hoc networking features of `MCSession`. The app both advertises itself to nearby iOS devices via Wi-Fi or Bluetooth and automatically connects to available peers, establishing a peer-to-peer network.
+A universal (iPhone/iPad) storyboard project that illustrates the ad-hoc networking features of `MCSession`. The app advertises itself to nearby iOS devices via Wi-Fi or Bluetooth and automatically connects to available peers, establishing a peer-to-peer network.
 
 ![](http://i.imgur.com/ISJhge8.png)
 
