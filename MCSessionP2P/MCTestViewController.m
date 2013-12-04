@@ -23,6 +23,8 @@
     MCNearbyServiceAdvertiser *_serviceAdvertiser;
     MCNearbyServiceBrowser *_serviceBrowser;
     
+    // Connected peers are stored in the MCSession
+    // Manually track connecting and disconnected peers
     NSMutableOrderedSet *_connectingPeers;
     NSMutableOrderedSet *_disconnectedPeers;
 }
