@@ -92,14 +92,23 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     
     self.title = [NSString stringWithFormat:@"MCSession: %@", _session.myPeerID.displayName];
 
+    // Create the service advertiser
     _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_peerID
-                                                                 discoveryInfo:nil
-                                                                   serviceType:kMCSessionServiceType];
+                                                           discoveryInfo:nil
+                                                             serviceType:kMCSessionServiceType];
     _serviceAdvertiser.delegate = self;
     
+    // Create the service browser
     _serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:_peerID
-                                                             serviceType:kMCSessionServiceType];
+                                                       serviceType:kMCSessionServiceType];
     _serviceBrowser.delegate = self;
+}
+
+- (void)teardownSession
+{
+    [_session disconnect];
+    [_connectingPeers removeAllObjects];
+    [_disconnectedPeers removeAllObjects];
 }
 
 - (void)startServices
@@ -113,7 +122,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 {
     [_serviceBrowser stopBrowsingForPeers];
     [_serviceAdvertiser stopAdvertisingPeer];
-    [_session disconnect];
+    [self teardownSession];
 }
 
 // Helper method for human readable printing of MCSessionState.  This state is per peer.
