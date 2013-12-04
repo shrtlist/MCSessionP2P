@@ -18,9 +18,13 @@
 
 @implementation MCTestViewController
 {
+    MCPeerID *_peerID;
     MCSession *_session;
     MCNearbyServiceAdvertiser *_serviceAdvertiser;
     MCNearbyServiceBrowser *_serviceBrowser;
+    
+    NSMutableOrderedSet *_connectingPeers;
+    NSMutableOrderedSet *_disconnectedPeers;
 }
 
 static NSString * const kMCSessionServiceType = @"mcsessionp2p";
@@ -30,6 +34,11 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
+    
+    _connectingPeers = [[NSMutableOrderedSet alloc] init];
+    _disconnectedPeers = [[NSMutableOrderedSet alloc] init];
 
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
@@ -72,20 +81,18 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 - (void)setupSession
 {
-    MCPeerID *peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
-
     // Create the session that peers will be invited/join into.
-    _session = [[MCSession alloc] initWithPeer:peerID];
+    _session = [[MCSession alloc] initWithPeer:_peerID];
     _session.delegate = self;
     
     self.title = [NSString stringWithFormat:@"MCSession: %@", _session.myPeerID.displayName];
 
-    _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:peerID
+    _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_peerID
                                                                  discoveryInfo:nil
                                                                    serviceType:kMCSessionServiceType];
     _serviceAdvertiser.delegate = self;
     
-    _serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:peerID
+    _serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:_peerID
                                                              serviceType:kMCSessionServiceType];
     _serviceBrowser.delegate = self;
 }
@@ -124,6 +131,30 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
 {
     NSLog(@"Peer [%@] changed state to %@", peerID.displayName, [self stringForPeerConnectionState:state]);
+    
+    switch (state)
+    {
+        case MCSessionStateConnecting:
+        {
+            [_connectingPeers addObject:peerID];
+            [_disconnectedPeers removeObject:peerID];
+            break;
+        }
+            
+        case MCSessionStateConnected:
+        {
+            [_connectingPeers removeObject:peerID];
+            [_disconnectedPeers removeObject:peerID];
+            break;
+        }
+            
+        case MCSessionStateNotConnected:
+        {
+            [_disconnectedPeers addObject:peerID];
+            [_connectingPeers removeObject:peerID];
+            break;
+        }
+    }
     
     // Delegate calls occur on a private operation queue.
     // Ensure UI updates occur on the main queue.
@@ -252,18 +283,19 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     {
         case MCSessionStateConnecting:
         {
+            rows = _connectingPeers.count;
             break;
         }
             
         case MCSessionStateConnected:
         {
-            NSArray *connectedPeers = _session.connectedPeers;
-            rows = connectedPeers.count;
+            rows = _session.connectedPeers.count;
             break;
         }
             
         case MCSessionStateNotConnected:
         {
+            rows = _disconnectedPeers.count;
             break;
         }
     }
@@ -291,22 +323,34 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     cell.textLabel.text = @"None";
-	
-    NSInteger peerConnectionState = indexPath.section;
 
 	NSArray *peers = nil;
-
-    switch (peerConnectionState)
+    
+    // Each tableView section represents an MCSessionState
+    MCSessionState sessionState = indexPath.section;
+	NSInteger peerIndex = indexPath.row;
+    
+    switch (sessionState)
     {
+        case MCSessionStateConnecting:
+        {
+            peers = [_connectingPeers array];
+            break;
+        }
+            
         case MCSessionStateConnected:
         {
             peers = _session.connectedPeers;
             break;
         }
+            
+        case MCSessionStateNotConnected:
+        {
+            peers = [_disconnectedPeers array];
+            break;
+        }
     }
 
-	NSInteger peerIndex = indexPath.row;
-    
     if ((peers.count > 0) && (peerIndex < peers.count))
     {
         MCPeerID *peerID = [peers objectAtIndex:peerIndex];
