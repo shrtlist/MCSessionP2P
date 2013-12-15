@@ -291,9 +291,11 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
     NSInteger rows = 0;
-    
+
     // Each tableView section represents an MCSessionState
-    switch (section)
+    MCSessionState sessionState = section;
+    
+    switch (sessionState)
     {
         case MCSessionStateConnecting:
         {
@@ -325,9 +327,10 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSInteger peerConnectionState = section;
+    // Each tableView section represents an MCSessionState
+    MCSessionState sessionState = section;
     
-    return [self stringForPeerConnectionState:peerConnectionState];
+    return [self stringForPeerConnectionState:sessionState];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
