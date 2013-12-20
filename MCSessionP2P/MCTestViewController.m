@@ -45,15 +45,17 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
     // Register for notifications
-    [defaultCenter addObserver:self 
+    [defaultCenter addObserver:self
                       selector:@selector(startServices)
-                          name:UIApplicationDidBecomeActiveNotification
+                          name:UIApplicationWillEnterForegroundNotification
                         object:nil];
-
-    [defaultCenter addObserver:self 
+    
+    [defaultCenter addObserver:self
                       selector:@selector(stopServices)
-                          name:UIApplicationWillResignActiveNotification
+                          name:UIApplicationDidEnterBackgroundNotification
                         object:nil];
+    
+    [self startServices];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
