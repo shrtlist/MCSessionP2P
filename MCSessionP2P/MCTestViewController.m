@@ -318,7 +318,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
         }
     }
     
-    // Always show at least 1 row for each GKPeerConnectionState.
+    // Always show at least 1 row for each MCSessionState.
     if (rows < 1)
     {
         rows = 1;
