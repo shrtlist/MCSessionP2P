@@ -22,6 +22,7 @@
 		570D886C18418F3A0044FCB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570D886A18418F3A0044FCB8 /* InfoPlist.strings */; };
 		570D886E18418F3A0044FCB8 /* MCSessionP2PTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */; };
 		570D8879184190190044FCB8 /* MCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D8878184190190044FCB8 /* MCTestViewController.m */; };
+		57FDF0B1186E25E10048F9FA /* SessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FDF0B0186E25E10048F9FA /* SessionController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCSessionP2PTests.m; sourceTree = "<group>"; };
 		570D8877184190190044FCB8 /* MCTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTestViewController.h; sourceTree = "<group>"; };
 		570D8878184190190044FCB8 /* MCTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTestViewController.m; sourceTree = "<group>"; };
+		57FDF0AF186E25E10048F9FA /* SessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionController.h; sourceTree = "<group>"; };
+		57FDF0B0186E25E10048F9FA /* SessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				570D884F18418F3A0044FCB8 /* AppDelegate.m */,
 				570D8877184190190044FCB8 /* MCTestViewController.h */,
 				570D8878184190190044FCB8 /* MCTestViewController.m */,
+				57FDF0AF186E25E10048F9FA /* SessionController.h */,
+				57FDF0B0186E25E10048F9FA /* SessionController.m */,
 				570D885118418F3A0044FCB8 /* Main_iPhone.storyboard */,
 				570D885418418F3A0044FCB8 /* Main_iPad.storyboard */,
 				570D885A18418F3A0044FCB8 /* Images.xcassets */,
@@ -202,6 +207,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = shrtlist;
 				TargetAttributes = {
+					570D883B18418F3A0044FCB8 = {
+						DevelopmentTeam = 6YCWDV2B6A;
+					};
 					570D885F18418F3A0044FCB8 = {
 						TestTargetID = 570D883B18418F3A0044FCB8;
 					};
@@ -255,6 +263,7 @@
 			files = (
 				570D8879184190190044FCB8 /* MCTestViewController.m in Sources */,
 				570D885018418F3A0044FCB8 /* AppDelegate.m in Sources */,
+				57FDF0B1186E25E10048F9FA /* SessionController.m in Sources */,
 				570D884C18418F3A0044FCB8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,6 +401,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCSessionP2P/MCSessionP2P-Prefix.pch";
 				INFOPLIST_FILE = "MCSessionP2P/MCSessionP2P-Info.plist";
@@ -405,6 +415,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCSessionP2P/MCSessionP2P-Prefix.pch";
 				INFOPLIST_FILE = "MCSessionP2P/MCSessionP2P-Info.plist";
@@ -474,6 +485,7 @@
 				570D887318418F3A0044FCB8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		570D887418418F3A0044FCB8 /* Build configuration list for PBXNativeTarget "MCSessionP2PTests" */ = {
 			isa = XCConfigurationList;
@@ -482,6 +494,7 @@
 				570D887618418F3A0044FCB8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

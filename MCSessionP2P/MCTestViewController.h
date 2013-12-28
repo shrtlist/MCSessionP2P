@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import "SessionController.h"
 
-@interface MCTestViewController : UITableViewController <MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate>
+@interface MCTestViewController : UITableViewController <SessionControllerDelegate>
 
 @end
