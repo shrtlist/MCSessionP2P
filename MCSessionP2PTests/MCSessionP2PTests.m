@@ -15,6 +15,7 @@
  */
 
 #import <XCTest/XCTest.h>
+#import "SessionController.h"
 
 @interface MCSessionP2PTests : XCTestCase
 
@@ -22,21 +23,12 @@
 
 @implementation MCSessionP2PTests
 
-- (void)setUp
+- (void)testSessionController
 {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    SessionController *sessionController = [[SessionController alloc] init];
+    
+    XCTAssertNotNil(sessionController.displayName, @"Expected non-nil displayName");
+    XCTAssertNotNil(sessionController.connectedPeers, @"Expected non-nil connectedPeers");
 }
 
 @end
