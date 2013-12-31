@@ -216,14 +216,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     }
 }
 
-- (void)session:(MCSession *)session didReceiveCertificate:(NSArray *)certificate fromPeer:(MCPeerID *)peerID certificateHandler:(void (^)(BOOL accept))certificateHandler
-{
-    NSLog(@"didReceiveCertificate %@ from %@", certificate, peerID.displayName);
-    
-    // Trust the nearby peer
-    certificateHandler(true);
-}
-
 // Streaming API not utilized in this sample code
 - (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID
 {
