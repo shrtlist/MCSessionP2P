@@ -170,8 +170,8 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
             
         case MCSessionStateNotConnected:
         {
-            [_disconnectedPeersOrderedSet addObject:peerID];
             [_connectingPeersOrderedSet removeObject:peerID];
+            [_disconnectedPeersOrderedSet addObject:peerID];
             break;
         }
     }
