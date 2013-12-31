@@ -28,7 +28,9 @@
     SessionController *sessionController = [[SessionController alloc] init];
     
     XCTAssertNotNil(sessionController.displayName, @"Expected non-nil displayName");
+    XCTAssertNotNil(sessionController.connectingPeers, @"Expected non-nil connectingPeers");
     XCTAssertNotNil(sessionController.connectedPeers, @"Expected non-nil connectedPeers");
+    XCTAssertNotNil(sessionController.disconnectedPeers, @"Expected non-nil disconnectedPeers");
 }
 
 @end
