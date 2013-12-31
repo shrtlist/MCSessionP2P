@@ -59,6 +59,10 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
         
         [self startServices];
 
+        _connectedPeers = _session.connectedPeers;
+        _connectingPeers = [_connectingPeersOrderedSet array];
+        _disconnectedPeers = [_disconnectedPeersOrderedSet array];
+
         _displayName = _session.myPeerID.displayName;
     }
     
