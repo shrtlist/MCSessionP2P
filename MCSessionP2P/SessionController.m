@@ -236,7 +236,8 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     NSLog(@"Browser found %@", remotePeerName);
     
     MCPeerID *myPeerID = _session.myPeerID;
-    BOOL shouldInvite = ([myPeerID.displayName hash] > [remotePeerName hash]);
+    
+    BOOL shouldInvite = ([myPeerID.displayName compare:remotePeerName] == NSOrderedDescending);
     
     if (shouldInvite)
     {
