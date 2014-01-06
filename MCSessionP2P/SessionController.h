@@ -24,9 +24,9 @@
 A SessionController creates the MCSession that peers will be invited/join
 into, as well as creating service advertisers and browsers.
 
-Multipeer Connectivity delegate calls occur on a private operation queue. If your app needs to
-perform an action on a particular run loop or operation queue, its
-delegate method should explicitly dispatch or schedule that work
+MCSessionDelegate calls occur on a private operation queue. If your app
+needs to perform an action on a particular run loop or operation queue,
+its delegate method should explicitly dispatch or schedule that work
 */
 @interface SessionController : NSObject <MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate>
 
