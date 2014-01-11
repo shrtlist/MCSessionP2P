@@ -16,18 +16,19 @@
 
 #import "SessionController.h"
 
+@interface SessionController () // Class extension
+@property (nonatomic, strong) MCPeerID *peerID;
+@property (nonatomic, strong) MCSession *session;
+@property (nonatomic, strong) MCNearbyServiceAdvertiser *serviceAdvertiser;
+@property (nonatomic, strong) MCNearbyServiceBrowser *serviceBrowser;
+
+// Connected peers are stored in the MCSession
+// Manually track connecting and disconnected peers
+@property (nonatomic, strong) NSMutableOrderedSet *connectingPeersOrderedSet;
+@property (nonatomic, strong) NSMutableOrderedSet *disconnectedPeersOrderedSet;
+@end
+
 @implementation SessionController
-{
-    MCPeerID *_peerID;
-    MCSession *_session;
-    MCNearbyServiceAdvertiser *_serviceAdvertiser;
-    MCNearbyServiceBrowser *_serviceBrowser;
-    
-    // Connected peers are stored in the MCSession
-    // Manually track connecting and disconnected peers
-    NSMutableOrderedSet *_connectingPeersOrderedSet;
-    NSMutableOrderedSet *_disconnectedPeersOrderedSet;
-}
 
 static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
@@ -59,11 +60,11 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
         
         [self startServices];
 
-        _connectedPeers = _session.connectedPeers;
-        _connectingPeers = [_connectingPeersOrderedSet array];
-        _disconnectedPeers = [_disconnectedPeersOrderedSet array];
+        _connectedPeers = self.session.connectedPeers;
+        _connectingPeers = [self.connectingPeersOrderedSet array];
+        _disconnectedPeers = [self.disconnectedPeersOrderedSet array];
 
-        _displayName = _session.myPeerID.displayName;
+        _displayName = self.session.myPeerID.displayName;
     }
     
     return self;
@@ -87,47 +88,47 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 - (void)setupSession
 {
     // Create the session that peers will be invited/join into.
-    _session = [[MCSession alloc] initWithPeer:_peerID];
-    _session.delegate = self;
+    _session = [[MCSession alloc] initWithPeer:self.peerID];
+    self.session.delegate = self;
     
     // Create the service advertiser
-    _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_peerID
+    _serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:self.peerID
                                                            discoveryInfo:nil
                                                              serviceType:kMCSessionServiceType];
-    _serviceAdvertiser.delegate = self;
+    self.serviceAdvertiser.delegate = self;
     
     // Create the service browser
-    _serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:_peerID
+    _serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:self.peerID
                                                        serviceType:kMCSessionServiceType];
-    _serviceBrowser.delegate = self;
+    self.serviceBrowser.delegate = self;
 }
 
 - (void)teardownSession
 {
-    [_session disconnect];
-    [_connectingPeersOrderedSet removeAllObjects];
-    [_disconnectedPeersOrderedSet removeAllObjects];
+    [self.session disconnect];
+    [self.connectingPeersOrderedSet removeAllObjects];
+    [self.disconnectedPeersOrderedSet removeAllObjects];
 }
 
 - (void)startServices
 {
     [self setupSession];
-    [_serviceAdvertiser startAdvertisingPeer];
-    [_serviceBrowser startBrowsingForPeers];
+    [self.serviceAdvertiser startAdvertisingPeer];
+    [self.serviceBrowser startBrowsingForPeers];
 }
 
 - (void)stopServices
 {
-    [_serviceBrowser stopBrowsingForPeers];
-    [_serviceAdvertiser stopAdvertisingPeer];
+    [self.serviceBrowser stopBrowsingForPeers];
+    [self.serviceAdvertiser stopAdvertisingPeer];
     [self teardownSession];
 }
 
 - (void)updateDelegate
 {
-    _connectedPeers = _session.connectedPeers;
-    _connectingPeers = [_connectingPeersOrderedSet array];
-    _disconnectedPeers = [_disconnectedPeersOrderedSet array];
+    _connectedPeers = self.session.connectedPeers;
+    _connectingPeers = [self.connectingPeersOrderedSet array];
+    _disconnectedPeers = [self.disconnectedPeersOrderedSet array];
     
     [self.delegate sessionDidChangeState];
 }
@@ -156,22 +157,22 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     {
         case MCSessionStateConnecting:
         {
-            [_connectingPeersOrderedSet addObject:peerID];
-            [_disconnectedPeersOrderedSet removeObject:peerID];
+            [self.connectingPeersOrderedSet addObject:peerID];
+            [self.disconnectedPeersOrderedSet removeObject:peerID];
             break;
         }
             
         case MCSessionStateConnected:
         {
-            [_connectingPeersOrderedSet removeObject:peerID];
-            [_disconnectedPeersOrderedSet removeObject:peerID];
+            [self.connectingPeersOrderedSet removeObject:peerID];
+            [self.disconnectedPeersOrderedSet removeObject:peerID];
             break;
         }
             
         case MCSessionStateNotConnected:
         {
-            [_connectingPeersOrderedSet removeObject:peerID];
-            [_disconnectedPeersOrderedSet addObject:peerID];
+            [self.connectingPeersOrderedSet removeObject:peerID];
+            [self.disconnectedPeersOrderedSet addObject:peerID];
             break;
         }
     }
@@ -235,14 +236,14 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     
     NSLog(@"Browser found %@", remotePeerName);
     
-    MCPeerID *myPeerID = _session.myPeerID;
+    MCPeerID *myPeerID = self.session.myPeerID;
     
     BOOL shouldInvite = ([myPeerID.displayName compare:remotePeerName] == NSOrderedDescending);
     
     if (shouldInvite)
     {
         NSLog(@"Inviting %@", remotePeerName);
-        [browser invitePeer:peerID toSession:_session withContext:nil timeout:30.0];
+        [browser invitePeer:peerID toSession:self.session withContext:nil timeout:30.0];
     }
     else
     {
@@ -256,8 +257,8 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 {
     NSLog(@"lostPeer %@", peerID.displayName);
     
-    [_connectingPeersOrderedSet removeObject:peerID];
-    [_disconnectedPeersOrderedSet addObject:peerID];
+    [self.connectingPeersOrderedSet removeObject:peerID];
+    [self.disconnectedPeersOrderedSet addObject:peerID];
     
     [self updateDelegate];
 }
@@ -273,10 +274,10 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 {
     NSLog(@"didReceiveInvitationFromPeer %@", peerID.displayName);
     
-    invitationHandler(YES, _session);
+    invitationHandler(YES, self.session);
     
-    [_connectingPeersOrderedSet addObject:peerID];
-    [_disconnectedPeersOrderedSet removeObject:peerID];
+    [self.connectingPeersOrderedSet addObject:peerID];
+    [self.disconnectedPeersOrderedSet removeObject:peerID];
     
     [self updateDelegate];
 }
