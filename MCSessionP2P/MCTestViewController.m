@@ -16,10 +16,11 @@
 
 #import "MCTestViewController.h"
 
+@interface MCTestViewController () // Class extension
+@property (nonatomic, strong) SessionController *sessionController;
+@end
+
 @implementation MCTestViewController
-{
-    SessionController *_sessionController;
-}
 
 #pragma mark - View lifecycle
 
@@ -28,9 +29,9 @@
     [super viewDidLoad];
     
     _sessionController = [[SessionController alloc] init];
-    _sessionController.delegate = self;
+    self.sessionController.delegate = self;
 
-    self.title = [NSString stringWithFormat:@"MCSession: %@", _sessionController.displayName];
+    self.title = [NSString stringWithFormat:@"MCSession: %@", self.sessionController.displayName];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -84,19 +85,19 @@
     {
         case MCSessionStateConnecting:
         {
-            rows = _sessionController.connectingPeers.count;
+            rows = self.sessionController.connectingPeers.count;
             break;
         }
             
         case MCSessionStateConnected:
         {
-            rows = _sessionController.connectedPeers.count;
+            rows = self.sessionController.connectedPeers.count;
             break;
         }
             
         case MCSessionStateNotConnected:
         {
-            rows = _sessionController.disconnectedPeers.count;
+            rows = self.sessionController.disconnectedPeers.count;
             break;
         }
     }
@@ -115,7 +116,7 @@
     // Each tableView section represents an MCSessionState
     MCSessionState sessionState = section;
     
-    return [_sessionController stringForPeerConnectionState:sessionState];
+    return [self.sessionController stringForPeerConnectionState:sessionState];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -136,19 +137,19 @@
     {
         case MCSessionStateConnecting:
         {
-            peers = _sessionController.connectingPeers;
+            peers = self.sessionController.connectingPeers;
             break;
         }
             
         case MCSessionStateConnected:
         {
-            peers = _sessionController.connectedPeers;
+            peers = self.sessionController.connectedPeers;
             break;
         }
             
         case MCSessionStateNotConnected:
         {
-            peers = _sessionController.disconnectedPeers;
+            peers = self.sessionController.disconnectedPeers;
             break;
         }
     }
