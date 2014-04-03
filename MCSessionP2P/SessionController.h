@@ -32,10 +32,10 @@ its delegate method should explicitly dispatch or schedule that work
 
 @property (nonatomic, weak) id<SessionControllerDelegate> delegate;
 
-@property (nonatomic, readonly) NSString *displayName;
-@property (nonatomic, readonly) NSArray *connectingPeers;
 @property (nonatomic, readonly) NSArray *connectedPeers;
+@property (nonatomic, readonly) NSArray *connectingPeers;
 @property (nonatomic, readonly) NSArray *disconnectedPeers;
+@property (nonatomic, readonly) NSString *displayName;
 
 // Helper method for human readable printing of MCSessionState. This state is per peer.
 - (NSString *)stringForPeerConnectionState:(MCSessionState)state;
