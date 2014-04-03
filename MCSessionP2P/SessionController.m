@@ -60,10 +60,6 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
         
         [self startServices];
 
-        _connectedPeers = self.session.connectedPeers;
-        _connectingPeers = [self.connectingPeersOrderedSet array];
-        _disconnectedPeers = [self.disconnectedPeersOrderedSet array];
-
         _displayName = self.session.myPeerID.displayName;
     }
     
@@ -81,6 +77,23 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
     _session.delegate = nil;
     _serviceAdvertiser.delegate = nil;
     _serviceBrowser.delegate = nil;
+}
+
+#pragma mark - Override property accessors
+
+- (NSArray *)connectedPeers
+{
+    return self.session.connectedPeers;
+}
+
+- (NSArray *)connectingPeers
+{
+    return [self.connectingPeersOrderedSet array];
+}
+
+- (NSArray *)disconnectedPeers
+{
+    return [self.disconnectedPeersOrderedSet array];
 }
 
 #pragma mark - Private methods
