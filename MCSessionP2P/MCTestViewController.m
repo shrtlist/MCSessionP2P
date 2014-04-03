@@ -52,7 +52,7 @@
 - (void)dealloc
 {
     // Nil out delegate
-    _sessionController.delegate = nil;
+    self.sessionController.delegate = nil;
 }
 
 #pragma mark - SessionControllerDelegate protocol conformance
