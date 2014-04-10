@@ -138,11 +138,7 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 }
 
 - (void)updateDelegate
-{
-    _connectedPeers = self.session.connectedPeers;
-    _connectingPeers = [self.connectingPeersOrderedSet array];
-    _disconnectedPeers = [self.disconnectedPeersOrderedSet array];
-    
+{    
     [self.delegate sessionDidChangeState];
 }
 
