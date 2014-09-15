@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		570D884018418F3A0044FCB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D883F18418F3A0044FCB8 /* Foundation.framework */; };
-		570D884218418F3A0044FCB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D884118418F3A0044FCB8 /* CoreGraphics.framework */; };
-		570D884418418F3A0044FCB8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D884318418F3A0044FCB8 /* UIKit.framework */; };
 		570D884A18418F3A0044FCB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570D884818418F3A0044FCB8 /* InfoPlist.strings */; };
 		570D884C18418F3A0044FCB8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D884B18418F3A0044FCB8 /* main.m */; };
 		570D885018418F3A0044FCB8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D884F18418F3A0044FCB8 /* AppDelegate.m */; };
@@ -17,8 +14,6 @@
 		570D885618418F3A0044FCB8 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570D885418418F3A0044FCB8 /* Main_iPad.storyboard */; };
 		570D885B18418F3A0044FCB8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570D885A18418F3A0044FCB8 /* Images.xcassets */; };
 		570D886218418F3A0044FCB8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D886118418F3A0044FCB8 /* XCTest.framework */; };
-		570D886318418F3A0044FCB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D883F18418F3A0044FCB8 /* Foundation.framework */; };
-		570D886418418F3A0044FCB8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D884318418F3A0044FCB8 /* UIKit.framework */; };
 		570D886C18418F3A0044FCB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570D886A18418F3A0044FCB8 /* InfoPlist.strings */; };
 		570D886E18418F3A0044FCB8 /* MCSessionP2PTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */; };
 		570D8879184190190044FCB8 /* MCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D8878184190190044FCB8 /* MCTestViewController.m */; };
@@ -65,9 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570D884218418F3A0044FCB8 /* CoreGraphics.framework in Frameworks */,
-				570D884418418F3A0044FCB8 /* UIKit.framework in Frameworks */,
-				570D884018418F3A0044FCB8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +68,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				570D886218418F3A0044FCB8 /* XCTest.framework in Frameworks */,
-				570D886418418F3A0044FCB8 /* UIKit.framework in Frameworks */,
-				570D886318418F3A0044FCB8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
