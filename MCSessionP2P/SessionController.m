@@ -158,6 +158,11 @@ static NSString * const kMCSessionServiceType = @"mcsessionp2p";
 
 #pragma mark - MCSessionDelegate protocol conformance
 
+- (void)session:(MCSession *)session didReceiveCertificate:(NSArray *)certificate fromPeer:(MCPeerID *)peerID certificateHandler:(void (^)(BOOL))certificateHandler
+{
+    certificateHandler(YES);
+}
+
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
 {
     NSLog(@"Peer [%@] changed state to %@", peerID.displayName, [self stringForPeerConnectionState:state]);
