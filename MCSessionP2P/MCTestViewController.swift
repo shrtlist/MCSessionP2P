@@ -36,7 +36,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
         title = NSString(format: "MCSession: %@", sessionController.displayName!) as String
     }
 
-    // MARK: Memory management
+    // MARK: Deinitialization
     
     deinit {
         // Nil out delegate
