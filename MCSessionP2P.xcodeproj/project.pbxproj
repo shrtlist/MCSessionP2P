@@ -13,10 +13,8 @@
 		5707C4C61C154CF90002E22A /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5707C4C51C154CF90002E22A /* SessionController.swift */; };
 		570D884A18418F3A0044FCB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570D884818418F3A0044FCB8 /* InfoPlist.strings */; };
 		570D885B18418F3A0044FCB8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570D885A18418F3A0044FCB8 /* Images.xcassets */; };
-		570D886218418F3A0044FCB8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D886118418F3A0044FCB8 /* XCTest.framework */; };
-		570D886C18418F3A0044FCB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570D886A18418F3A0044FCB8 /* InfoPlist.strings */; };
-		570D886E18418F3A0044FCB8 /* MCSessionP2PTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */; };
 		57FF8A8F1B9790CB003EAB73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */; };
+		67A94B4D1C160CFD00FD7674 /* MCSessionP2PTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A94B4C1C160CFD00FD7674 /* MCSessionP2PTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,9 +43,8 @@
 		570D886018418F3A0044FCB8 /* MCSessionP2PTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MCSessionP2PTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		570D886118418F3A0044FCB8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		570D886918418F3A0044FCB8 /* MCSessionP2PTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCSessionP2PTests-Info.plist"; sourceTree = "<group>"; };
-		570D886B18418F3A0044FCB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCSessionP2PTests.m; sourceTree = "<group>"; };
 		57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		67A94B4C1C160CFD00FD7674 /* MCSessionP2PTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCSessionP2PTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +59,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570D886218418F3A0044FCB8 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +122,7 @@
 		570D886718418F3A0044FCB8 /* MCSessionP2PTests */ = {
 			isa = PBXGroup;
 			children = (
-				570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */,
+				67A94B4C1C160CFD00FD7674 /* MCSessionP2PTests.swift */,
 				570D886818418F3A0044FCB8 /* Supporting Files */,
 			);
 			path = MCSessionP2PTests;
@@ -136,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				570D886918418F3A0044FCB8 /* MCSessionP2PTests-Info.plist */,
-				570D886A18418F3A0044FCB8 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -232,7 +227,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570D886C18418F3A0044FCB8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570D886E18418F3A0044FCB8 /* MCSessionP2PTests.m in Sources */,
+				67A94B4D1C160CFD00FD7674 /* MCSessionP2PTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,14 +274,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				570D884918418F3A0044FCB8 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		570D886A18418F3A0044FCB8 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				570D886B18418F3A0044FCB8 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -411,6 +397,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MCSessionP2P.app/MCSessionP2P";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -423,8 +410,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "MCSessionP2PTests/MCSessionP2PTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -434,6 +423,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MCSessionP2P.app/MCSessionP2P";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -442,6 +432,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCSessionP2P/MCSessionP2P-Prefix.pch";
 				INFOPLIST_FILE = "MCSessionP2PTests/MCSessionP2PTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
