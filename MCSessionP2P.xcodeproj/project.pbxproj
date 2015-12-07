@@ -7,18 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5707C4BF1C151D760002E22A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5707C4BE1C151D760002E22A /* AppDelegate.swift */; };
+		5707C4C21C151FE30002E22A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5707C4C01C151FE30002E22A /* Main.storyboard */; };
+		5707C4C41C1526960002E22A /* MCTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5707C4C31C1526960002E22A /* MCTestViewController.swift */; };
+		5707C4C61C154CF90002E22A /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5707C4C51C154CF90002E22A /* SessionController.swift */; };
 		570D884A18418F3A0044FCB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570D884818418F3A0044FCB8 /* InfoPlist.strings */; };
-		570D884C18418F3A0044FCB8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D884B18418F3A0044FCB8 /* main.m */; };
-		570D885018418F3A0044FCB8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D884F18418F3A0044FCB8 /* AppDelegate.m */; };
-		570D885318418F3A0044FCB8 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570D885118418F3A0044FCB8 /* Main_iPhone.storyboard */; };
-		570D885618418F3A0044FCB8 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570D885418418F3A0044FCB8 /* Main_iPad.storyboard */; };
 		570D885B18418F3A0044FCB8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570D885A18418F3A0044FCB8 /* Images.xcassets */; };
 		570D886218418F3A0044FCB8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570D886118418F3A0044FCB8 /* XCTest.framework */; };
 		570D886C18418F3A0044FCB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570D886A18418F3A0044FCB8 /* InfoPlist.strings */; };
 		570D886E18418F3A0044FCB8 /* MCSessionP2PTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */; };
-		570D8879184190190044FCB8 /* MCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570D8878184190190044FCB8 /* MCTestViewController.m */; };
-		57FDF0B1186E25E10048F9FA /* SessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FDF0B0186E25E10048F9FA /* SessionController.m */; };
-		57FF8A8F1B9790CB003EAB73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		57FF8A8F1B9790CB003EAB73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,28 +30,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5707C4BE1C151D760002E22A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5707C4C11C151FE30002E22A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5707C4C31C1526960002E22A /* MCTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTestViewController.swift; sourceTree = "<group>"; };
+		5707C4C51C154CF90002E22A /* SessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
+		5707C4C71C155DA30002E22A /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		570D883C18418F3A0044FCB8 /* MCSessionP2P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCSessionP2P.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		570D883F18418F3A0044FCB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		570D884118418F3A0044FCB8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		570D884318418F3A0044FCB8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		570D884718418F3A0044FCB8 /* MCSessionP2P-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCSessionP2P-Info.plist"; sourceTree = "<group>"; };
 		570D884918418F3A0044FCB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		570D884B18418F3A0044FCB8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		570D884D18418F3A0044FCB8 /* MCSessionP2P-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCSessionP2P-Prefix.pch"; sourceTree = "<group>"; };
-		570D884E18418F3A0044FCB8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		570D884F18418F3A0044FCB8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		570D885218418F3A0044FCB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		570D885518418F3A0044FCB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		570D885A18418F3A0044FCB8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		570D886018418F3A0044FCB8 /* MCSessionP2PTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MCSessionP2PTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		570D886118418F3A0044FCB8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		570D886918418F3A0044FCB8 /* MCSessionP2PTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCSessionP2PTests-Info.plist"; sourceTree = "<group>"; };
 		570D886B18418F3A0044FCB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		570D886D18418F3A0044FCB8 /* MCSessionP2PTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCSessionP2PTests.m; sourceTree = "<group>"; };
-		570D8877184190190044FCB8 /* MCTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTestViewController.h; sourceTree = "<group>"; };
-		570D8878184190190044FCB8 /* MCTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTestViewController.m; sourceTree = "<group>"; };
-		57FDF0AF186E25E10048F9FA /* SessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionController.h; sourceTree = "<group>"; };
-		57FDF0B0186E25E10048F9FA /* SessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionController.m; sourceTree = "<group>"; };
 		57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +91,7 @@
 		570D883E18418F3A0044FCB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5707C4C71C155DA30002E22A /* MultipeerConnectivity.framework */,
 				570D883F18418F3A0044FCB8 /* Foundation.framework */,
 				570D884118418F3A0044FCB8 /* CoreGraphics.framework */,
 				570D884318418F3A0044FCB8 /* UIKit.framework */,
@@ -109,15 +103,11 @@
 		570D884518418F3A0044FCB8 /* MCSessionP2P */ = {
 			isa = PBXGroup;
 			children = (
-				570D884E18418F3A0044FCB8 /* AppDelegate.h */,
-				570D884F18418F3A0044FCB8 /* AppDelegate.m */,
-				570D8877184190190044FCB8 /* MCTestViewController.h */,
-				570D8878184190190044FCB8 /* MCTestViewController.m */,
-				57FDF0AF186E25E10048F9FA /* SessionController.h */,
-				57FDF0B0186E25E10048F9FA /* SessionController.m */,
+				5707C4BE1C151D760002E22A /* AppDelegate.swift */,
+				5707C4C31C1526960002E22A /* MCTestViewController.swift */,
+				5707C4C51C154CF90002E22A /* SessionController.swift */,
 				57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */,
-				570D885118418F3A0044FCB8 /* Main_iPhone.storyboard */,
-				570D885418418F3A0044FCB8 /* Main_iPad.storyboard */,
+				5707C4C01C151FE30002E22A /* Main.storyboard */,
 				570D885A18418F3A0044FCB8 /* Images.xcassets */,
 				570D884618418F3A0044FCB8 /* Supporting Files */,
 			);
@@ -129,8 +119,6 @@
 			children = (
 				570D884718418F3A0044FCB8 /* MCSessionP2P-Info.plist */,
 				570D884818418F3A0044FCB8 /* InfoPlist.strings */,
-				570D884B18418F3A0044FCB8 /* main.m */,
-				570D884D18418F3A0044FCB8 /* MCSessionP2P-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -197,7 +185,8 @@
 		570D883418418F3A0044FCB8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = shrtlist;
 				TargetAttributes = {
 					570D883B18418F3A0044FCB8 = {
@@ -232,9 +221,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570D885618418F3A0044FCB8 /* Main_iPad.storyboard in Resources */,
 				570D885B18418F3A0044FCB8 /* Images.xcassets in Resources */,
-				570D885318418F3A0044FCB8 /* Main_iPhone.storyboard in Resources */,
+				5707C4C21C151FE30002E22A /* Main.storyboard in Resources */,
 				57FF8A8F1B9790CB003EAB73 /* LaunchScreen.storyboard in Resources */,
 				570D884A18418F3A0044FCB8 /* InfoPlist.strings in Resources */,
 			);
@@ -255,10 +243,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570D8879184190190044FCB8 /* MCTestViewController.m in Sources */,
-				570D885018418F3A0044FCB8 /* AppDelegate.m in Sources */,
-				57FDF0B1186E25E10048F9FA /* SessionController.m in Sources */,
-				570D884C18418F3A0044FCB8 /* main.m in Sources */,
+				5707C4C41C1526960002E22A /* MCTestViewController.swift in Sources */,
+				5707C4C61C154CF90002E22A /* SessionController.swift in Sources */,
+				5707C4BF1C151D760002E22A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,28 +268,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5707C4C01C151FE30002E22A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5707C4C11C151FE30002E22A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		570D884818418F3A0044FCB8 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				570D884918418F3A0044FCB8 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		570D885118418F3A0044FCB8 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				570D885218418F3A0044FCB8 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		570D885418418F3A0044FCB8 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				570D885518418F3A0044FCB8 /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		570D886A18418F3A0044FCB8 /* InfoPlist.strings */ = {
@@ -334,6 +313,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -393,12 +373,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCSessionP2P/MCSessionP2P-Prefix.pch";
 				INFOPLIST_FILE = "MCSessionP2P/MCSessionP2P-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -408,12 +393,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCSessionP2P/MCSessionP2P-Prefix.pch";
 				INFOPLIST_FILE = "MCSessionP2P/MCSessionP2P-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -434,6 +423,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "MCSessionP2PTests/MCSessionP2PTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -452,6 +442,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCSessionP2P/MCSessionP2P-Prefix.pch";
 				INFOPLIST_FILE = "MCSessionP2PTests/MCSessionP2PTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
