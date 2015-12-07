@@ -15,6 +15,7 @@
 		570D885B18418F3A0044FCB8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570D885A18418F3A0044FCB8 /* Images.xcassets */; };
 		57FF8A8F1B9790CB003EAB73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */; };
 		67A94B4D1C160CFD00FD7674 /* MCSessionP2PTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A94B4C1C160CFD00FD7674 /* MCSessionP2PTests.swift */; };
+		67A94B4F1C16150B00FD7674 /* MCSession+stringForPeerConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A94B4E1C16150B00FD7674 /* MCSession+stringForPeerConnectionState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		570D886918418F3A0044FCB8 /* MCSessionP2PTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCSessionP2PTests-Info.plist"; sourceTree = "<group>"; };
 		57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		67A94B4C1C160CFD00FD7674 /* MCSessionP2PTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCSessionP2PTests.swift; sourceTree = "<group>"; };
+		67A94B4E1C16150B00FD7674 /* MCSession+stringForPeerConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MCSession+stringForPeerConnectionState.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				5707C4BE1C151D760002E22A /* AppDelegate.swift */,
+				67A94B4E1C16150B00FD7674 /* MCSession+stringForPeerConnectionState.swift */,
 				5707C4C31C1526960002E22A /* MCTestViewController.swift */,
 				5707C4C51C154CF90002E22A /* SessionController.swift */,
 				57FF8A8E1B9790CB003EAB73 /* LaunchScreen.storyboard */,
@@ -238,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5707C4C41C1526960002E22A /* MCTestViewController.swift in Sources */,
+				67A94B4F1C16150B00FD7674 /* MCSession+stringForPeerConnectionState.swift in Sources */,
 				5707C4C61C154CF90002E22A /* SessionController.swift in Sources */,
 				5707C4BF1C151D760002E22A /* AppDelegate.swift in Sources */,
 			);

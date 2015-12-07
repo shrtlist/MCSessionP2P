@@ -90,7 +90,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
         // Each tableView section represents an MCSessionState
         let sessionState = MCSessionState(rawValue: section)
         
-        return sessionController.stringForPeerConnectionState(sessionState!) as String
+        return MCSession.stringForPeerConnectionState(sessionState!)
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
