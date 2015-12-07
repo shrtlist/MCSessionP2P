@@ -129,19 +129,6 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         teardownSession()
     }
 
-    func stringForPeerConnectionState(state: MCSessionState) -> NSString {
-        switch state {
-        case MCSessionState.Connecting:
-            return "Connecting"
-            
-            case MCSessionState.Connected:
-                return "Connected"
-                
-            case MCSessionState.NotConnected:
-                return "Not Connected"
-        }
-    }
-
     // MARK: MCSessionDelegate protocol conformance
     
     func session(session: MCSession, didReceiveCertificate certificate: [AnyObject]?, fromPeer peerID: MCPeerID, certificateHandler: (Bool) -> Void) {
@@ -149,7 +136,7 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     }
 
     func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
-        NSLog("Peer [%@] changed state to %@", peerID.displayName, stringForPeerConnectionState(state))
+        NSLog("Peer [%@] changed state to %@", peerID.displayName, MCSession.stringForPeerConnectionState(state))
         
         switch state {
         case MCSessionState.Connecting:
