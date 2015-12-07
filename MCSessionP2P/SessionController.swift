@@ -19,7 +19,7 @@ import MultipeerConnectivity
 
 // Delegate method for SessionController
 protocol SessionControllerDelegate {
-    // Session changed state - connecting, connected and disconnected peers changed
+    // Multipeer Connectivity session changed state - connecting, connected and disconnected peers changed
     func sessionDidChangeState()
 }
 
@@ -57,7 +57,7 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     
     var displayName: NSString?
     
-    var session: MCSession?
+    private var session: MCSession?
     private var serviceAdvertiser: MCNearbyServiceAdvertiser?
     private var serviceBrowser: MCNearbyServiceBrowser?
 
@@ -83,7 +83,7 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         displayName = session!.myPeerID.displayName
     }
 
-    // MARK: Memory management
+    // MARK: Deinitialization
 
     deinit {
         // Unregister for notifications on deallocation.
@@ -95,9 +95,9 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         serviceBrowser!.delegate = nil
     }
 
-    // MARK: Private methods
+    // MARK: Multipeer Connectivity session setup / teardown
 
-    func setupSession() {
+    private func setupSession() {
         // Create the session that peers will be invited/join into.
         session = MCSession(peer: peerID)
         session!.delegate = self
@@ -111,19 +111,21 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         serviceBrowser!.delegate = self
     }
 
-    func teardownSession() {
+    private func teardownSession() {
         session?.disconnect()
         connectingPeersOrderedSet.removeAllObjects()
         disconnectedPeersOrderedSet.removeAllObjects()
     }
+    
+    // MARK: Services start / stop
 
-    func startServices() {
+    private func startServices() {
         setupSession()
         serviceAdvertiser!.startAdvertisingPeer()
         serviceBrowser!.startBrowsingForPeers()
     }
 
-    func stopServices() {
+    private func stopServices() {
         serviceBrowser!.stopBrowsingForPeers()
         serviceAdvertiser!.stopAdvertisingPeer()
         teardownSession()
