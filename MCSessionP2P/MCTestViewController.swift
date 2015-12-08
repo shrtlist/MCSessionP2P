@@ -20,7 +20,7 @@ import UIKit
 /*!
 @class MCTestViewController
 @abstract
-Presents SNAP retailers and farmers markets in a table view
+Presents peer connection states in a table view
 */
 class MCTestViewController: UITableViewController, SessionControllerDelegate {
     

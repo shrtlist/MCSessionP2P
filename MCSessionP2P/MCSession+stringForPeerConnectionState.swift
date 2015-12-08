@@ -10,7 +10,7 @@ import MultipeerConnectivity
 
 extension MCSession {
     /*!
-     @abstract Gets the string for a connection state
+     @abstract Gets the string for a peer connection state
      @param peer connection state, an MCSessionState enum value
      @return string for peer connection state
      */
