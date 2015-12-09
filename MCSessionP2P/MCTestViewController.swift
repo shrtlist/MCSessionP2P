@@ -33,7 +33,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
     
         sessionController.delegate = self
         
-        title = NSString(format: "MCSession: %@", sessionController.displayName!) as String
+        title = NSString(format: "MCSession: %@", sessionController.displayName) as String
     }
 
     // MARK: Deinitialization
@@ -57,7 +57,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // We have 3 sections in our grouped table view,
         // one for each MCSessionState
-        return 3;
+        return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,19 +67,18 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
         let sessionState = MCSessionState(rawValue: section)
         
         switch sessionState! {
-        case MCSessionState.Connecting:
+        case .Connecting:
             rows = sessionController.connectingPeers.count
             
-        case MCSessionState.Connected:
+        case .Connected:
             rows = sessionController.connectedPeers.count
             
-        case MCSessionState.NotConnected:
+        case .NotConnected:
             rows = sessionController.disconnectedPeers.count
         }
         
         // Always show at least 1 row for each MCSessionState.
-        if (rows < 1)
-        {
+        if (rows < 1) {
             rows = 1
         }
         
@@ -95,7 +94,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
-        cell!.textLabel!.text = "None"
+        cell?.textLabel?.text = "None"
 
         var peers: NSArray
         
@@ -116,7 +115,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
 
         if (peers.count > 0) && (peerIndex < peers.count) {
             let peerID = peers.objectAtIndex(peerIndex) as! MCPeerID
-            cell!.textLabel!.text = peerID.displayName
+            cell?.textLabel!.text = peerID.displayName
         }
         
         return cell!

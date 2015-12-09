@@ -35,7 +35,7 @@ its delegate method should explicitly dispatch or schedule that work
 */
 class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     
-    var delegate: SessionControllerDelegate?
+    // MARK: Public properties
     
     var connectedPeers: [MCPeerID] {
         get {
@@ -55,19 +55,26 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         }
     }
     
-    var displayName: NSString?
+    var displayName: NSString {
+        get {
+            return session!.myPeerID.displayName
+        }
+    }
+
+    var delegate: SessionControllerDelegate?
+    
+    // MARK: Private properties
     
     private var session: MCSession?
     private var serviceAdvertiser: MCNearbyServiceAdvertiser?
     private var serviceBrowser: MCNearbyServiceBrowser?
-
-    let kMCSessionServiceType = "mcsessionp2p"
-    let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
     
     // Connected peers are stored in the MCSession
     // Manually track connecting and disconnected peers
     private var connectingPeersOrderedSet = NSMutableOrderedSet()
     private var disconnectedPeersOrderedSet = NSMutableOrderedSet()
+
+    private let kMCSessionServiceType = "mcsessionp2p"
 
     // MARK: Initializer
 
@@ -79,36 +86,35 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "stopServices", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         startServices()
-
-        displayName = session!.myPeerID.displayName
     }
 
     // MARK: Deinitialization
 
     deinit {
-        // Unregister for notifications on deallocation.
+        // Unregister for notifications on deinitialization.
         NSNotificationCenter.defaultCenter().removeObserver(self)
         
         // Nil out delegates
-        session!.delegate = nil
-        serviceAdvertiser!.delegate = nil
-        serviceBrowser!.delegate = nil
+        session?.delegate = nil
+        serviceAdvertiser?.delegate = nil
+        serviceBrowser?.delegate = nil
     }
 
     // MARK: Multipeer Connectivity session setup / teardown
 
     private func setupSession() {
         // Create the session that peers will be invited/join into.
+        let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
         session = MCSession(peer: peerID)
-        session!.delegate = self
+        session?.delegate = self
         
         // Create the service advertiser
         serviceAdvertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: kMCSessionServiceType)
-        serviceAdvertiser!.delegate = self
+        serviceAdvertiser?.delegate = self
         
         // Create the service browser
         serviceBrowser = MCNearbyServiceBrowser(peer: peerID, serviceType: kMCSessionServiceType)
-        serviceBrowser!.delegate = self
+        serviceBrowser?.delegate = self
     }
 
     private func teardownSession() {
@@ -121,13 +127,13 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
 
     private func startServices() {
         setupSession()
-        serviceAdvertiser!.startAdvertisingPeer()
-        serviceBrowser!.startBrowsingForPeers()
+        serviceAdvertiser?.startAdvertisingPeer()
+        serviceBrowser?.startBrowsingForPeers()
     }
 
     private func stopServices() {
-        serviceBrowser!.stopBrowsingForPeers()
-        serviceAdvertiser!.stopAdvertisingPeer()
+        serviceBrowser?.stopBrowsingForPeers()
+        serviceAdvertiser?.stopAdvertisingPeer()
         teardownSession()
     }
 
@@ -141,20 +147,20 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         NSLog("Peer [%@] changed state to %@", peerID.displayName, MCSession.stringForPeerConnectionState(state))
         
         switch state {
-        case MCSessionState.Connecting:
+        case .Connecting:
             connectingPeersOrderedSet.addObject(peerID)
             disconnectedPeersOrderedSet.removeObject(peerID)
             
-        case MCSessionState.Connected:
+        case .Connected:
             connectingPeersOrderedSet.removeObject(peerID)
             disconnectedPeersOrderedSet.removeObject(peerID)
             
-        case MCSessionState.NotConnected:
+        case .NotConnected:
             connectingPeersOrderedSet.removeObject(peerID)
             disconnectedPeersOrderedSet.addObject(peerID)
         }
         
-        delegate!.sessionDidChangeState()
+        delegate?.sessionDidChangeState()
     }
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
@@ -173,10 +179,10 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         
         // If error is not nil something went wrong
         if (error != nil) {
-            NSLog("Error [%@] receiving resource from %@ ", (error?.localizedDescription)!, peerID.displayName)
+            NSLog("Error [%@] receiving resource from %@ ", error!, peerID.displayName)
         }
         else {
-            // No error so this is a completed transfer.  The resources is located in a temporary location and should be copied to a permenant location immediately.
+            // No error so this is a completed transfer. The resources is located in a temporary location and should be copied to a permenant location immediately.
             // Write to documents directory
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             let copyPath = NSString(format: "%@/%@", paths.first!, resourceName)
@@ -206,19 +212,20 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         
         NSLog("Browser found %@", remotePeerName)
         
-        let myPeerID = session!.myPeerID
+        if let myPeerID = session?.myPeerID {
         
-        let shouldInvite = (myPeerID.displayName.compare(remotePeerName) == NSComparisonResult.OrderedDescending)
-        
-        if (shouldInvite) {
-            NSLog("Inviting %@", remotePeerName)
-            browser.invitePeer(peerID, toSession: session!, withContext: nil, timeout: 30.0)
+            let shouldInvite = (myPeerID.displayName.compare(remotePeerName) == .OrderedDescending)
+            
+            if (shouldInvite) {
+                NSLog("Inviting %@", remotePeerName)
+                browser.invitePeer(peerID, toSession: session!, withContext: nil, timeout: 30.0)
+            }
+            else {
+                NSLog("Not inviting %@", remotePeerName)
+            }
         }
-        else {
-            NSLog("Not inviting %@", remotePeerName)
-        }
         
-        delegate!.sessionDidChangeState()
+        delegate?.sessionDidChangeState()
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -227,7 +234,7 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         connectingPeersOrderedSet.removeObject(peerID)
         disconnectedPeersOrderedSet.addObject(peerID)
         
-        delegate!.sessionDidChangeState()
+        delegate?.sessionDidChangeState()
     }
 
     func browser(browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: NSError) {
@@ -244,7 +251,7 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         connectingPeersOrderedSet.addObject(peerID)
         disconnectedPeersOrderedSet.removeObject(peerID)
         
-        delegate!.sessionDidChangeState()
+        delegate?.sessionDidChangeState()
     }
 
     func advertiser(advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: NSError) {

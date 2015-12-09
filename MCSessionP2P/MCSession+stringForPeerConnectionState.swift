@@ -16,13 +16,13 @@ extension MCSession {
      */
     class func stringForPeerConnectionState(state: MCSessionState) -> String {
         switch state {
-        case MCSessionState.Connecting:
+        case .Connecting:
             return "Connecting"
             
-        case MCSessionState.Connected:
+        case .Connected:
             return "Connected"
             
-        case MCSessionState.NotConnected:
+        case .NotConnected:
             return "Not Connected"
         }
     }
