@@ -93,8 +93,8 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
-        cell?.textLabel?.text = "None"
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        cell.textLabel?.text = "None"
 
         var peers: NSArray
         
@@ -115,10 +115,10 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
 
         if (peers.count > 0) && (peerIndex < peers.count) {
             let peerID = peers.objectAtIndex(peerIndex) as! MCPeerID
-            cell?.textLabel!.text = peerID.displayName
+            cell.textLabel!.text = peerID.displayName
         }
         
-        return cell!
+        return cell
     }
     
 }
