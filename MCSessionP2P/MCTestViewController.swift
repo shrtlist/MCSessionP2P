@@ -103,13 +103,13 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
         let peerIndex = indexPath.row
         
         switch sessionState! {
-        case MCSessionState.Connecting:
+        case .Connecting:
             peers = sessionController.connectingPeers
             
-        case MCSessionState.Connected:
+        case .Connected:
             peers = sessionController.connectedPeers
             
-        case MCSessionState.NotConnected:
+        case .NotConnected:
             peers = sessionController.disconnectedPeers
         }
 
