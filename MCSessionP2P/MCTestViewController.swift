@@ -115,7 +115,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
 
         if (peers.count > 0) && (peerIndex < peers.count) {
             let peerID = peers.objectAtIndex(peerIndex) as! MCPeerID
-            cell.textLabel!.text = peerID.displayName
+            cell.textLabel?.text = peerID.displayName
         }
         
         return cell
