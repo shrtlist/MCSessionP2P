@@ -125,13 +125,13 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     
     // MARK: Services start / stop
 
-    private func startServices() {
+    func startServices() {
         setupSession()
         serviceAdvertiser?.startAdvertisingPeer()
         serviceBrowser?.startBrowsingForPeers()
     }
 
-    private func stopServices() {
+    func stopServices() {
         serviceBrowser?.stopBrowsingForPeers()
         serviceAdvertiser?.stopAdvertisingPeer()
         teardownSession()
