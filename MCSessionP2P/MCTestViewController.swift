@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 shrtlist.com
+ * Copyright 2017 shrtlist.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import UIKit
 @abstract
 Presents peer connection states in a table view
 */
-class MCTestViewController: UITableViewController, SessionControllerDelegate {
+class MCTestViewController: UITableViewController {
     
     let sessionController = SessionController()
 
@@ -33,7 +33,7 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
     
         sessionController.delegate = self
         
-        title = NSString(format: "MCSession: %@", sessionController.displayName) as String
+        title = "MCSession: \(sessionController.displayName)"
     }
 
     // MARK: Deinitialization
@@ -43,82 +43,82 @@ class MCTestViewController: UITableViewController, SessionControllerDelegate {
         sessionController.delegate = nil
     }
 
-    // MARK: SessionControllerDelegate protocol conformance
-    
-    func sessionDidChangeState() {
-        // Ensure UI updates occur on the main queue.
-        dispatch_async(dispatch_get_main_queue(), {
-            self.tableView.reloadData()
-        })
-    }
-
     // MARK: UITableViewDataSource protocol conformance
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // We have 3 sections in our grouped table view,
         // one for each MCSessionState
         return 3
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows = 0
 
         // Each tableView section represents an MCSessionState
         let sessionState = MCSessionState(rawValue: section)
         
         switch sessionState! {
-        case .Connecting:
+        case .connecting:
             rows = sessionController.connectingPeers.count
             
-        case .Connected:
+        case .connected:
             rows = sessionController.connectedPeers.count
             
-        case .NotConnected:
+        case .notConnected:
             rows = sessionController.disconnectedPeers.count
         }
         
         // Always show at least 1 row for each MCSessionState.
-        if (rows < 1) {
+        if rows < 1 {
             rows = 1
         }
         
         return rows
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         // Each tableView section represents an MCSessionState
         let sessionState = MCSessionState(rawValue: section)
         
         return MCSession.stringForPeerConnectionState(sessionState!)
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = "None"
 
-        var peers: NSArray
+        var peers: [MCPeerID]
         
         // Each tableView section represents an MCSessionState
         let sessionState = MCSessionState(rawValue: indexPath.section)
         let peerIndex = indexPath.row
         
         switch sessionState! {
-        case .Connecting:
+        case .connecting:
             peers = sessionController.connectingPeers
             
-        case .Connected:
+        case .connected:
             peers = sessionController.connectedPeers
             
-        case .NotConnected:
+        case .notConnected:
             peers = sessionController.disconnectedPeers
         }
 
         if (peers.count > 0) && (peerIndex < peers.count) {
-            let peerID = peers.objectAtIndex(peerIndex) as! MCPeerID
+            let peerID = peers[peerIndex]
             cell.textLabel?.text = peerID.displayName
         }
         
         return cell
     }
-    
+}
+
+extension MCTestViewController: SessionControllerDelegate {
+
+    func sessionDidChangeState() {
+        // Ensure UI updates occur on the main queue.
+        DispatchQueue.main.async(execute: { [weak self] in
+            self?.tableView.reloadData()
+        })
+    }
 }
