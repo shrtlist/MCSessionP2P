@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 shrtlist.com
+ * Copyright 2017 shrtlist.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,7 @@
 import Foundation
 import MultipeerConnectivity
 
-// Delegate method for SessionController
-protocol SessionControllerDelegate {
+protocol SessionControllerDelegate: class {
     // Multipeer Connectivity session changed state - connecting, connected and disconnected peers changed
     func sessionDidChangeState()
 }
@@ -33,9 +32,7 @@ MCSessionDelegate calls occur on a private operation queue. If your app
 needs to perform an action on a particular run loop or operation queue,
 its delegate method should explicitly dispatch or schedule that work
 */
-class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
-    
-    // MARK: Public properties
+class SessionController: NSObject {
     
     var connectedPeers: [MCPeerID] {
         get {
@@ -57,17 +54,18 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     
     var displayName: NSString {
         get {
-            return session.myPeerID.displayName
+            return session.myPeerID.displayName as NSString
         }
     }
 
-    var delegate: SessionControllerDelegate?
+    /// An object that implements the `SessionControllerDelegate` protocol
+    weak var delegate: SessionControllerDelegate?
     
     // MARK: Private properties
     
-    private let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
+    private let peerID = MCPeerID(displayName: UIDevice.current.name)
     
-    private lazy var session: MCSession = {
+    fileprivate lazy var session: MCSession = {
         let session = MCSession(peer: self.peerID)
         session.delegate = self
         return session
@@ -78,8 +76,8 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     
     // Connected peers are stored in the MCSession
     // Manually track connecting and disconnected peers
-    private var connectingPeersDictionary = NSMutableDictionary()
-    private var disconnectedPeersDictionary = NSMutableDictionary()
+    fileprivate var connectingPeersDictionary = NSMutableDictionary()
+    fileprivate var disconnectedPeersDictionary = NSMutableDictionary()
 
     // MARK: Initializer
 
@@ -110,7 +108,7 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
 
     // MARK: Services start / stop
 
-    func startServices() {
+    private func startServices() {
         serviceBrowser.delegate = self
         serviceBrowser.startBrowsingForPeers()
         
@@ -118,100 +116,102 @@ class SessionController: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         serviceAdvertiser.startAdvertisingPeer()
     }
 
-    func stopServices() {
+    private func stopServices() {
         serviceAdvertiser.stopAdvertisingPeer()
         serviceAdvertiser.delegate = nil
         
         serviceBrowser.stopBrowsingForPeers()
         serviceBrowser.delegate = nil
     }
+}
 
-    // MARK: MCSessionDelegate protocol conformance
+extension SessionController: MCSessionDelegate {
 
-    func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         let displayName = peerID.displayName
         
-        NSLog("%@ [%@] %@", __FUNCTION__, displayName, MCSession.stringForPeerConnectionState(state))
+        NSLog("\(#function) \(displayName) \(MCSession.stringForPeerConnectionState(state))")
 
         switch state {
-        case .Connecting:
-            connectingPeersDictionary.setObject(peerID, forKey: displayName)
-            disconnectedPeersDictionary.removeObjectForKey(displayName)
+        case .connecting:
+            connectingPeersDictionary.setObject(peerID, forKey: displayName as NSCopying)
+            disconnectedPeersDictionary.removeObject(forKey: displayName)
             
-        case .Connected:
-            connectingPeersDictionary.removeObjectForKey(displayName)
-            disconnectedPeersDictionary.removeObjectForKey(displayName)
+        case .connected:
+            connectingPeersDictionary.removeObject(forKey: displayName)
+            disconnectedPeersDictionary.removeObject(forKey: displayName)
             
-        case .NotConnected:
-            connectingPeersDictionary.removeObjectForKey(displayName)
-            disconnectedPeersDictionary.setObject(peerID, forKey: displayName)
+        case .notConnected:
+            connectingPeersDictionary.removeObject(forKey: displayName)
+            disconnectedPeersDictionary.setObject(peerID, forKey: displayName as NSCopying)
         }
         
         delegate?.sessionDidChangeState()
     }
     
-    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        NSLog("%@ from [%@]", __FUNCTION__, peerID.displayName)
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        NSLog("\(#function) from [\(peerID.displayName)]")
     }
     
-    func session(session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
-        NSLog("%@ %@ from [%@] with progress [%@]", __FUNCTION__, resourceName, peerID.displayName, progress)
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        NSLog("\(#function) \(resourceName) from [\(peerID.displayName)] with progress [\(progress)]")
     }
     
-    func session(session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, atURL localURL: NSURL, withError error: NSError?) {
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL, withError error: Error?) {
         // If error is not nil something went wrong
         if (error != nil) {
-            NSLog("%@ Error %@ from [%@]", __FUNCTION__, error!, peerID.displayName)
+            NSLog("\(#function) Error \(error) from [\(peerID.displayName)]")
         }
         else {
-            NSLog("%@ %@ from [%@]", __FUNCTION__, resourceName, peerID.displayName)
+            NSLog("\(#function) \(resourceName) from [\(peerID.displayName)]")
         }
     }
 
     // Streaming API not utilized in this sample code
-    func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
-        NSLog("%@ %@ from [%@]", __FUNCTION__, streamName, peerID.displayName)
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        NSLog("\(#function) \(streamName) from [\(peerID.displayName)]")
     }
+}
 
-    // MARK: MCNearbyServiceBrowserDelegate protocol conformance
+extension SessionController: MCNearbyServiceBrowserDelegate {
 
     // Found a nearby advertising peer
-    func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+    func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         let remotePeerName = peerID.displayName
         
         let myPeerID = session.myPeerID
         
-            let shouldInvite = (myPeerID.displayName.compare(remotePeerName) == .OrderedDescending)
+            let shouldInvite = (myPeerID.displayName.compare(remotePeerName) == .orderedDescending)
             
-            if (shouldInvite) {
-                NSLog("%@ Inviting [%@]", __FUNCTION__, remotePeerName)
-                browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 30.0)
+            if shouldInvite {
+                NSLog("\(#function) Inviting [\(remotePeerName)]")
+                browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30.0)
             }
             else {
-                NSLog("%@ Not inviting [%@]", __FUNCTION__, remotePeerName)
+                NSLog("\(#function) Not inviting [\(remotePeerName)]")
             }
             
             delegate?.sessionDidChangeState()
     }
     
-    func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        NSLog("%@ lostPeer [%@]", __FUNCTION__, peerID.displayName)
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        NSLog("\(#function) [\(peerID.displayName)]")
     }
 
-    func browser(browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: NSError) {
-        NSLog("%@ %@", __FUNCTION__, error)
+    func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
+        NSLog("\(#function) \(error)")
     }
+}
 
-    // MARK: MCNearbyServiceAdvertiserDelegate protocol conformance
+extension SessionController: MCNearbyServiceAdvertiserDelegate {
 
-    func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: NSData?, invitationHandler: (Bool, MCSession) -> Void) {
-        NSLog("%@ Accepting invitation from [%@]", __FUNCTION__, peerID.displayName)
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        NSLog("\(#function) Accepting invitation from [\(peerID.displayName)]")
         
         invitationHandler(true, session)
     }
 
-    func advertiser(advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: NSError) {
-        NSLog("%@ %@", __FUNCTION__, error)
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
+        NSLog("\(#function) \(error)")
     }
-
 }

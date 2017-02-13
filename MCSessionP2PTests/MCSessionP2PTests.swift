@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 shrtlist.com
+ * Copyright 2017 shrtlist.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import XCTest
 @testable import MCSessionP2P
 
-class MCSessionP2PTests : XCTestCase {
+class MCSessionP2PTests: XCTestCase {
 
     func testSessionController() {
         let sessionController = SessionController()
@@ -27,5 +27,4 @@ class MCSessionP2PTests : XCTestCase {
         XCTAssertNotNil(sessionController.connectedPeers, "Expected non-nil connectedPeers")
         XCTAssertNotNil(sessionController.disconnectedPeers, "Expected non-nil disconnectedPeers")
     }
-
 }
