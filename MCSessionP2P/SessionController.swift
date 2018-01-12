@@ -157,7 +157,7 @@ extension SessionController: MCSessionDelegate {
         NSLog("\(#function) \(resourceName) from [\(peerID.displayName)] with progress [\(progress)]")
     }
     
-    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL, withError error: Error?) {
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
         // If error is not nil something went wrong
         if (error != nil) {
             NSLog("\(#function) Error \(String(describing: error)) from [\(peerID.displayName)]")
