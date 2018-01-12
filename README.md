@@ -9,10 +9,10 @@ You'll need to run at least two instances of the app to set up a P2P network. Bu
 Please note: Bluetooth networking is not supported in Simulator.
 
 ### Build requirements
-Xcode 5, iOS 7.0 SDK, LLVM Compiler 4.1, Automated Reference Counting (ARC).
+Xcode 9, iOS 11 SDK
 
 ### Runtime requirements
-iOS 7.0 and later
+iOS 11.0 and later
 
 ### License
 The source code is available under the Apache License, Version 2.0
