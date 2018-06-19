@@ -55,9 +55,9 @@ class MCTestViewController: UITableViewController {
         var rows = 0
 
         // Each tableView section represents an MCSessionState
-        let sessionState = MCSessionState(rawValue: section)
+        guard let sessionState = MCSessionState(rawValue: section) else { return rows }
         
-        switch sessionState! {
+        switch sessionState {
         case .connecting:
             rows = sessionController.connectingPeers.count
             
@@ -90,10 +90,11 @@ class MCTestViewController: UITableViewController {
         var peers: [MCPeerID]
         
         // Each tableView section represents an MCSessionState
-        let sessionState = MCSessionState(rawValue: indexPath.section)
+        guard let sessionState = MCSessionState(rawValue: indexPath.section) else { return cell }
+
         let peerIndex = indexPath.row
         
-        switch sessionState! {
+        switch sessionState {
         case .connecting:
             peers = sessionController.connectingPeers
             
