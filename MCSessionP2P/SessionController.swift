@@ -161,8 +161,7 @@ extension SessionController: MCSessionDelegate {
         // If error is not nil something went wrong
         if (error != nil) {
             NSLog("\(#function) Error \(String(describing: error)) from [\(peerID.displayName)]")
-        }
-        else {
+        } else {
             NSLog("\(#function) \(resourceName) from [\(peerID.displayName)]")
         }
     }
@@ -178,20 +177,19 @@ extension SessionController: MCNearbyServiceBrowserDelegate {
     // Found a nearby advertising peer
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         let remotePeerName = peerID.displayName
-        
+
         let myPeerID = session.myPeerID
-        
-            let shouldInvite = (myPeerID.displayName.compare(remotePeerName) == .orderedDescending)
-            
-            if shouldInvite {
-                NSLog("\(#function) Inviting [\(remotePeerName)]")
-                browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30.0)
-            }
-            else {
-                NSLog("\(#function) Not inviting [\(remotePeerName)]")
-            }
-            
-            delegate?.sessionDidChangeState()
+
+        let shouldInvite = (myPeerID.displayName.compare(remotePeerName) == .orderedDescending)
+
+        if shouldInvite {
+            NSLog("\(#function) Inviting [\(remotePeerName)]")
+            browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30.0)
+        } else {
+            NSLog("\(#function) Not inviting [\(remotePeerName)]")
+        }
+
+        delegate?.sessionDidChangeState()
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
