@@ -112,6 +112,12 @@ class MCTestViewController: UITableViewController {
         
         return cell
     }
+
+    // MARK: UITableViewDelegate protocol conformance
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension MCTestViewController: SessionControllerDelegate {
