@@ -65,7 +65,7 @@ class SessionController: NSObject {
     
     private let peerID = MCPeerID(displayName: UIDevice.current.name)
     
-    fileprivate lazy var session: MCSession = {
+    private lazy var session: MCSession = {
         let session = MCSession(peer: self.peerID)
         session.delegate = self
         return session
@@ -144,6 +144,8 @@ extension SessionController: MCSessionDelegate {
         case .notConnected:
             connectingPeersDictionary.removeObject(forKey: displayName)
             disconnectedPeersDictionary.setObject(peerID, forKey: displayName as NSCopying)
+        @unknown default:
+            fatalError()
         }
         
         delegate?.sessionDidChangeState()

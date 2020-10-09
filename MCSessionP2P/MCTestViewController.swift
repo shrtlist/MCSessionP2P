@@ -66,6 +66,8 @@ class MCTestViewController: UITableViewController {
             
         case .notConnected:
             rows = sessionController.disconnectedPeers.count
+        @unknown default:
+            fatalError()
         }
         
         // Always show at least 1 row for each MCSessionState.
@@ -103,6 +105,8 @@ class MCTestViewController: UITableViewController {
             
         case .notConnected:
             peers = sessionController.disconnectedPeers
+        @unknown default:
+            fatalError()
         }
 
         if (peers.count > 0) && (peerIndex < peers.count) {

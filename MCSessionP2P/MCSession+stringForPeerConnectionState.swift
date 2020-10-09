@@ -32,6 +32,8 @@ extension MCSession {
             
         case .notConnected:
             return "Not Connected"
+        @unknown default:
+            fatalError()
         }
     }
 }
