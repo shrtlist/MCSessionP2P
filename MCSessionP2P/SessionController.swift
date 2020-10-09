@@ -35,27 +35,19 @@ its delegate method should explicitly dispatch or schedule that work
 class SessionController: NSObject {
     
     var connectedPeers: [MCPeerID] {
-        get {
-            return session.connectedPeers
-        }
+        return session.connectedPeers
     }
     
     var connectingPeers: [MCPeerID] {
-        get {
-            return connectingPeersDictionary.allValues as! [MCPeerID]
-        }
+        return connectingPeersDictionary.allValues as! [MCPeerID]
     }
 
     var disconnectedPeers: [MCPeerID] {
-        get {
-            return disconnectedPeersDictionary.allValues as! [MCPeerID]
-        }
+        return disconnectedPeersDictionary.allValues as! [MCPeerID]
     }
     
     var displayName: String {
-        get {
-            return session.myPeerID.displayName
-        }
+        return session.myPeerID.displayName
     }
 
     /// An object that implements the `SessionControllerDelegate` protocol
