@@ -17,7 +17,7 @@
 import Foundation
 import MultipeerConnectivity
 
-protocol SessionControllerDelegate: class {
+protocol SessionControllerDelegate: AnyObject {
     // Multipeer Connectivity session changed state - connecting, connected and disconnected peers changed
     func sessionDidChangeState()
 }
